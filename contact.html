@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="fr"><head>
+<html lang="fr">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Contact · Magiciens du Cœur</title>
@@ -11,16 +12,16 @@
 <meta property="og:title" content="Contact · Magiciens du Cœur">
 <meta property="og:description" content="Contacter les Magiciens du Cœur : demander une intervention, organiser un spectacle, soutenir l'association ou rejoindre l'équipe.">
 <meta property="og:image" content="img/logo.png">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&amp;family=Inter:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="style.css">
-<meta name="editeur-publication" content="rsale1107/magiciensducoeur"></head>
+</head>
 <body>
 <a class="skip" href="#contenu">Aller au contenu</a>
 <header>
   <div class="wrap nav">
     <a class="brand" href="index.html" aria-label="Les Magiciens du Cœur, accueil"><img src="img/logo.png" alt="Les Magiciens du Cœur"></a>
     <button class="burger" id="burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
     <nav class="menu" id="menu" aria-label="Menu principal">
       <a class="link" href="index.html">Accueil</a><a class="link" href="actions.html">Nos actions</a><a class="link" href="evenements.html">Événements</a><a class="link" href="bureau.html">Le bureau</a><a class="link" href="contact.html" aria-current="page">Contact</a>
@@ -36,7 +37,7 @@
     <h1>Une intervention ? <span class="y">Écrivez-nous.</span></h1>
     <p>Établissement de soins, association, commune, ou magicien qui veut donner de son temps : nous répondons à chaque message.</p>
   </div></div>
-  <svg class="wave" viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true"><path d="M0 28 C 240 64 480 0 720 22 S 1200 60 1440 18 L1440 56 L0 56 Z"></path></svg>
+  <svg class="wave" viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true"><path d="M0 28 C 240 64 480 0 720 22 S 1200 60 1440 18 L1440 56 L0 56 Z"/></svg>
 </section>
 <section class="band-navy">
   <div class="wrap sec">
@@ -47,10 +48,10 @@
         <div class="illu" style="margin-top:8px"><img src="img/perso1.webp" alt=""></div>
       </div>
       <div>
-        <form class="form" id="contactForm" novalidate="">
-          <div><label for="prenom">Prénom</label><input id="prenom" name="prenom" type="text" autocomplete="given-name" required=""></div>
-          <div><label for="nom">Nom</label><input id="nom" name="nom" type="text" autocomplete="family-name" required=""></div>
-          <div><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" required=""></div>
+        <form class="form" id="contactForm" novalidate>
+          <div><label for="prenom">Prénom</label><input id="prenom" name="prenom" type="text" autocomplete="given-name" required></div>
+          <div><label for="nom">Nom</label><input id="nom" name="nom" type="text" autocomplete="family-name" required></div>
+          <div><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" required></div>
           <div><label for="objet">Objet</label>
             <select id="objet" name="objet">
               <option>Demander une intervention</option>
@@ -59,16 +60,16 @@
               <option>Rejoindre l'équipe de magiciens</option>
               <option>Autre</option>
             </select></div>
-          <div class="full"><label for="message">Votre demande</label><textarea id="message" name="message" placeholder="Dites-nous en quelques lignes ce dont vous avez besoin." required=""></textarea></div>
+          <div class="full"><label for="message">Votre demande</label><textarea id="message" name="message" placeholder="Dites-nous en quelques lignes ce dont vous avez besoin." required></textarea></div>
           <div class="full" style="display:flex;flex-wrap:wrap;gap:14px;align-items:center">
             <button type="submit" class="btn btn-blue">Envoyer le message</button>
-            <span id="err" style="font-size:.88rem;color:var(--sun);font-weight:600" hidden="">Merci de remplir tous les champs, avec un e-mail valide.</span>
+            <span id="err" style="font-size:.88rem;color:var(--sun);font-weight:600" hidden>Merci de remplir tous les champs, avec un e-mail valide.</span>
           </div>
-          <p class="full form-cfg" id="formCfg" tabindex="-1" hidden="">Proposition : l'adresse e-mail de l'association reste à relier à ce formulaire. Pour l'instant, aucun message n'est envoyé.</p>
+          <p class="full form-cfg" id="formCfg" tabindex="-1" hidden>Proposition : l'adresse e-mail de l'association reste à relier à ce formulaire. Pour l'instant, aucun message n'est envoyé.</p>
         </form>
-        <div class="sent" id="sent" hidden="">
-          <b>Votre message est prêt.</b>
-          <p>Votre messagerie s'est ouverte avec le message rédigé : il ne reste qu'à l'envoyer. Merci, nous revenons vers vous rapidement.</p>
+        <div class="sent" id="sent" hidden>
+          <b>Merci !</b>
+          <p>Votre message nous est bien parvenu. Nous revenons vers vous rapidement.</p>
         </div>
       </div>
     </div>
@@ -81,10 +82,9 @@
     <span>18 rue des Ormeaux, 78340 Les Clayes-sous-Bois</span>
     <span>Fait avec <span class="h">♥</span> pour les enfants hospitalisés</span>
     <nav class="foot-links" aria-label="Liens utiles"><a href="contact.html">Contact</a><a href="don.html">Faire un don</a><a href="mentions-legales.html">Mentions légales</a></nav>
-    <span class="ver">Proposition v3.1 · 11 novembre 2026</span>
+    <span class="ver">Proposition v3.2 · 13 novembre 2026</span>
   </div>
 </footer>
 <script src="site.js"></script>
-
-
-</body></html>
+</body>
+</html>

@@ -12,7 +12,7 @@
 
   /* ---- calculateur de don + bouton PayPal ---- */
   /* Compte PayPal de l'association : e-mail du compte ou identifiant marchand */
-  var PAYPAL_COMPTE = '';
+  var PAYPAL_COMPTE = 'lesmagiciensducoeur@gmail.com';
   var input = document.getElementById('montant');
   if (input) {
     var reel = document.getElementById('reel'), eco = document.getElementById('eco'),
@@ -57,24 +57,51 @@
   }
 
   /* ---- formulaire de contact ----
-     Adresse e-mail de l'association : le message est préparé dans la messagerie du visiteur.
-     Tant qu'elle est vide, le formulaire signale qu'il n'est pas encore relié (rien n'est envoyé). */
-  var CONTACT_EMAIL = '';
+     Adresse e-mail de l'association : les messages y arrivent directement (service gratuit FormSubmit,
+     sans compte). Au tout premier message, FormSubmit envoie un e-mail d'activation à cette adresse :
+     il suffit de cliquer une fois sur le lien reçu. Si l'envoi échoue, la messagerie du visiteur
+     s'ouvre avec le message déjà rédigé. Tant que l'adresse est vide, rien n'est envoyé. */
+  var CONTACT_EMAIL = 'lesmagiciensducoeur@gmail.com';
   var f = document.getElementById('contactForm');
   if (f) {
-    var sent = document.getElementById('sent'), err = document.getElementById('err'), cfg = document.getElementById('formCfg');
+    var sent = document.getElementById('sent'), err = document.getElementById('err'), cfg = document.getElementById('formCfg'),
+        btn = f.querySelector('button[type="submit"]'), sentTxt = sent ? sent.querySelector('p') : null;
     if (!CONTACT_EMAIL && cfg) cfg.hidden = false;
+    var val = function (id) { return document.getElementById(id).value.trim(); };
+    var showErr = function (t) { err.textContent = t; err.hidden = false; };
+    var done = function (msg) {
+      if (sentTxt && msg) sentTxt.textContent = msg;
+      f.hidden = true; sent.hidden = false; sent.setAttribute('tabindex', '-1'); sent.focus();
+    };
+    var viaMessagerie = function (objet, corps) {
+      window.location.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent(objet + ' – site des Magiciens du Cœur') + '&body=' + encodeURIComponent(corps);
+      done("Votre messagerie s'est ouverte avec le message rédigé : il ne reste qu'à l'envoyer. Si rien ne s'est ouvert, écrivez-nous à " + CONTACT_EMAIL + '.');
+    };
     f.addEventListener('submit', function (e) {
       e.preventDefault();
-      var val = function (id) { return document.getElementById(id).value.trim(); };
       var ok = ['prenom', 'nom', 'email', 'message'].every(function (id) { return val(id) !== ''; });
-      if (!ok || val('email').indexOf('@') < 1) { err.hidden = false; return; }
+      if (!ok || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val('email'))) { showErr('Merci de remplir tous les champs, avec un e-mail valide.'); return; }
       err.hidden = true;
       if (!CONTACT_EMAIL) { if (cfg) { cfg.hidden = false; cfg.focus(); } return; }
       var objet = document.getElementById('objet').value;
       var corps = val('message') + '\n\n' + val('prenom') + ' ' + val('nom') + '\n' + val('email');
-      window.location.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent(objet + ' – site des Magiciens du Cœur') + '&body=' + encodeURIComponent(corps);
-      f.hidden = true; sent.hidden = false;
+      if (!window.fetch) { viaMessagerie(objet, corps); return; }
+      btn.disabled = true; var lib = btn.textContent; btn.textContent = 'Envoi en cours…';
+      fetch('https://formsubmit.co/ajax/' + encodeURIComponent(CONTACT_EMAIL), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: objet + ' – site des Magiciens du Cœur',
+          _replyto: val('email'), _template: 'table', _captcha: 'false',
+          'Prénom': val('prenom'), 'Nom': val('nom'), 'E-mail': val('email'), 'Objet': objet, 'Message': val('message')
+        })
+      }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return r.ok && String(j.success) !== 'false'; }); })
+        .then(function (envoye) {
+          btn.disabled = false; btn.textContent = lib;
+          if (envoye) done('Merci, votre message nous est bien parvenu. Nous revenons vers vous rapidement.');
+          else viaMessagerie(objet, corps);
+        })
+        .catch(function () { btn.disabled = false; btn.textContent = lib; viaMessagerie(objet, corps); });
     });
   }
 })();
